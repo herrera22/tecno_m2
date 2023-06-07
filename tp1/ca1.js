@@ -57,14 +57,21 @@ class caminantes {
       }
     }
   }
-  objeto3() {
+  objeto3(amplitude, frequency) {
+    let xSpacing = 1.5; // Espaciado horizontal entre puntos
+    let yOffset = 200; // Desplazamiento vertical base
+  
     // Dibujar el elástico en forma de ondas
-    for (let x = 0; x < 1000; x += this.xSpacing) {
-      this.y = sin(x * this.frequency + frameCount * 0.40) * this.amplitude + this.yOffset;
-      ellipse(x, this.y, 10, 10);
-      ellipse(x, this.y+80, 10, 10);
+    for (let x = 0; x < 1080; x += xSpacing) {
+      this.yOffset++;
+      let y = sin(x * frequency + frameCount * 0.20) * amplitude + yOffset;
+      noStroke();
+      ellipse(x, y, 10, 10);
+      ellipse(x, y + 40, 10, 10);
+      ellipse(x, y + 80, 10, 10);
+      ellipse(x, y + 120, 10, 10);
     }
-  }
+  }  
   cambiaDireccion() {
     if (mouseIsPressed === true) {
       if (mouseButton === LEFT) {
