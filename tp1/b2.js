@@ -5,7 +5,7 @@ class Objeto2 {
         this.xSpacing = 1.5; // Espaciado horizontal entre puntos
         this.yOffset = 200; // Desplazamiento vertical base
     
-        this.numCurves = 5; // Número de curvas a dibujar
+        this.numCurves = 10; // Número de curvas a dibujar
         this.spacing = 20; // Espaciado vertical entre curvas
         this.curves = []; // Arreglo para almacenar las curvas
     
@@ -41,7 +41,7 @@ class Objeto2 {
           curve.y3 = height - mouseY + i * this.spacing;
     
           // Incrementa el parámetro de tiempo para el avance progresivo de x4
-          curve.t += curve.speed;
+          // curve.t += curve.speed;
     
           // Calcula la posición horizontal del último punto de control utilizando la función noise
           let x4Min = curve.x3; // Establece el límite mínimo para x4 como el valor de x3
@@ -83,8 +83,8 @@ class Objeto2 {
           );
     
           // Dibuja un círculo en el punto final de la curva
-          fill(255, 0, 0);
-          ellipse(curve.x4, curve.y4, 8, 8);
+          //fill(255, 0, 0);
+          //ellipse(curve.x4, curve.y4, 8, 8);
     
           // Reinicia la posición del bezier cuando alcanza el final del eje x
           if (curve.x4 >= width) {

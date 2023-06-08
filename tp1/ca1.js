@@ -38,8 +38,8 @@ class caminantes {
     ellipse(this.x2, this.y2 - 80, 10);
     ellipse(this.x2, this.y2 + 80, 10);
 
-    // this.x2 = this.x2 + this.vel * cos(radians(this.dir));
-    // this.y2 = this.y2 + this.vel * sin(radians(this.dir));
+      this.x2 = this.x2 + this.vel * cos(radians(this.dir));
+      this.y2 = this.y2 + this.vel * sin(radians(this.dir));
 
     if (mouseIsPressed) {
       if (mouseButton === CENTER) {
