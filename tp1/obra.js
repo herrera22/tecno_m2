@@ -18,27 +18,22 @@ class Obra {
   }
   //----- metodo actualizar que es el que reproduce la obra en el sketch principal------
   actualizar() {
-    
     //------- Determina cuando comienza el sonido
     let empezoElsonido = haySonido && !habiaSonido;
     console.log(empezoElsonido);
-
     //------- Inicio del programa con estado valiendo comienzo(0) ----------
-    if (this.estado === "comienzo"){
+    if (this.estado === "comienzo") {
       this.f.fondoImg();
-      
       //------- Si empezoElsonido pasa a de false a true se agregan los caminantes -------
-      
       if (empezoElsonido) {
         this.estado = "agregar";
       }
     }
-    
     //------- Si estado es igual a agregar se activara la clase dibujar -----------
-    if (this.estado === "agregar") {
+    else if (this.estado === "agregar") {
       this.ca1.dibujar();
     }
-    
+    //------- Cuando no hay sonido termina el programa 
     //-------- Imprime en consola el estado en donde se encuntra el programa ---------
     console.log(this.estado);
   }

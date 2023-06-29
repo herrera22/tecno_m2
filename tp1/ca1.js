@@ -52,15 +52,15 @@ class caminantes {
     }
     // utilizamos la variable direccion y de dir y vel para aumentar el valor de y
     if (gp.filtrada <= 0.1000 && haySonido) {
-      this.posY += 0.3;
-      this.dir += 2.5;
+      this.posY += 0.5;
+      this.dir += 2.8;
       console.log("aca esta andando");
     }
     // }//estas dos variable hacen que cuando sostengamos el movimiento sobre el eje x/y el eje y de los caminates se mueva
     // utilizamos la variable direccionx para decrecer el valor de y
-    if (gp.filtrada >= 0.1100 && haySonido) {
-      this.posY -= 0.3;
-      this.dir -= 2.5;
+    if (gp.filtrada >= 0.1600 && haySonido) {
+      this.posY -= 0.5;
+      this.dir -= 2.8;
       console.log("aca esta andandox2 ");
     }
   }

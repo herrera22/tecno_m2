@@ -18,8 +18,8 @@ const model_url = 'https://cdn.jsdelivr.net/gh/ml5js/ml5-data-and-models/models/
 // test
 let imprimir = true;
 //------- Valor de configuracion de la amplitud
-let AMP_MIN = 0.03;
-let AMP_MAX = 0.1;
+let AMP_MIN = 0.07;
+let AMP_MAX = 0.5;
 //------- Valor de configuracion de la frecuencia
 let FREC_MIN = 900;
 let FREC_MAX = 2000;
@@ -35,6 +35,18 @@ let haySonido = false;
 let habiaSonido = false;
 //------- Determina el comienzo del sonido
 
+// teachable machine 
+
+let classifier;
+let label = 'listening...';
+
+const options = { probabilityThreshold: 0.5 };
+let soundModel = 'https://teachablemachine.withgoogle.com/models/6ezEXSayv/';
+
+function preload() {
+  // Load the model
+  classifier = ml5.soundClassifier(soundModel + 'model.json');
+}
 
 function setup() {
   //------ Pantalla completa del navegador
@@ -50,8 +62,8 @@ function setup() {
   //------ Constructor del gestor
   Gs = new GestorSenial(AMP_MIN, AMP_MAX);
   //------ Constructor del gestor de pitch
-  gp = new GestorSenial(FREC_MIN,FREC_MAX);
-  
+  gp = new GestorSenial(FREC_MIN, FREC_MAX);
+
   //------- Valor de amortiguacion de ruido
   Gs.f = AMORTIGUACION;
   //------ Asignamos el audioContext
@@ -65,7 +77,8 @@ function setup() {
 
   //------ Asignamos el pgrafic
   xc = createGraphics(windowWidth, windowHeight);
-  
+
+  classifier.classify(gotResults);
 }
 
 //-------- FUNCION DRAW 
@@ -79,18 +92,11 @@ function draw() {
   //--------- Le asignamos a hay sonido un valor-----
   haySonido = Gs.filtrada > AMP_MIN; //umbral de ruido 
   //--------- Determinamos cuando comienza el sonido----
-  
+
   //--------- Llamamos a la clase obra y usamos acrualizar para visualizar el programa----------
   o.actualizar();
   //--------- prueba para debuguear
-  if (haySonido) {
-    if (imprimir) {
-      test();
-      Gs.dibujar(200, 200);
-      gp.dibujar(200,400);
-      console.log("Esta es"+gp.filtrada);
-    }
-  }
+  
   // -------- Canvas de pgrafic
   image(xc, 0, 0);
 
@@ -108,19 +114,29 @@ function test() {
   pop();
 }
 
+function gotResults(error, results) {
+  if (error) {
+    console.error(error);
+    return;
+  }
+  label = results[0].label;
+
+}
+
 //-------- FUNCIONES DEL PITCH/MACHINELEARNING
 function startPitch() {
-  pitch = ml5.pitchDetection(model_url, audioContext , mic.stream, modelLoaded);
+  pitch = ml5.pitchDetection(model_url, audioContext, mic.stream, modelLoaded);
 }
 function modelLoaded() {
   getPitch();
 }
 function getPitch() {
-  pitch.getPitch(function(err, frequency) {
+  pitch.getPitch(function (err, frequency) {
     if (frequency) {
       gp.actualizar(frequency);
       console.log("la frecuencia es " + frequency);
-    } 
+    }
     getPitch();
   })
 }
+
