@@ -4,28 +4,28 @@ class caminantes {
     //propiedades del objeto
     this.posx = 0;
     this.posY = 200;
-    this.dir = 0;
-    this.vel = 0.8;
+    this.dir = 1;
+    this.vel = 0.9;
 
     // objeto dir y vel
     this.miVelocidadYDireccion = new Dir_y_Vel();
 
     // Objeto paleta
-    this.p = new Paleta();    
+    this.p = new Paleta();
   }
 
   //-------- Funcion dibujar para los caminantes
   dibujar() {
     // *******LOS ELEMENTOS CON XC SON LOS QUE SON AFECTADOS POR EL PGRAFIC*******
-    let colorcito=this.p.darColor();
+    let colorcito = this.p.darColor();
     //le decimos a dir y vel que calcule todo en base al mousex y al mousey
     this.miVelocidadYDireccion.calcularTodo(mouseX, mouseY);
     // ciclo for que crea los 19 ellipses
     for (let i = 0; i < 19; i++) {
       // consdicion que pinta los ellipse pares de negro y los impares de blanco
       if (i % 2 === 0) {
-          xc.fill(0,0,0,30);
-      } else xc.fill(255,255,255,30);
+        xc.fill(0, 0, 0, 30);
+      } else xc.fill(255, 255, 255, 30);
       // le delclaramos que no tenga un stroke
       xc.noStroke();
       // creamos los elipses
@@ -52,21 +52,24 @@ class caminantes {
     }
     // utilizamos la variable direccion y de dir y vel para aumentar el valor de y
     if (gp.filtrada <= 0.1000 && haySonido) {
-      this.posY += 0.5;
-      this.dir += 2.8;
+      this.posY += 0.03;
+      this.dir += 0.40;
       console.log("aca esta andando");
     }
     // }//estas dos variable hacen que cuando sostengamos el movimiento sobre el eje x/y el eje y de los caminates se mueva
     // utilizamos la variable direccionx para decrecer el valor de y
     if (gp.filtrada >= 0.1600 && haySonido) {
-      this.posY -= 0.5;
-      this.dir -= 2.8;
+      this.posY -= 0.03;
+      this.dir -= 0.40;
       console.log("aca esta andandox2 ");
     }
   }
 
   //------- Funcion dar color con los trazos
-  darColor(){
-  
+  sacarCaptura() {
+    if (keyIsPressed && key === 's') {
+    saveCanvas("obra_generativa", "png");
+    console.log("Captura guardada como obra_generativa.png");
+    }
   }
 }

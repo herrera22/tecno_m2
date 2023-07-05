@@ -18,8 +18,8 @@ const model_url = 'https://cdn.jsdelivr.net/gh/ml5js/ml5-data-and-models/models/
 // test
 let imprimir = true;
 //------- Valor de configuracion de la amplitud
-let AMP_MIN = 0.07;
-let AMP_MAX = 0.5;
+let AMP_MIN = 0.01;
+let AMP_MAX = 0.3;
 //------- Valor de configuracion de la frecuencia
 let FREC_MIN = 900;
 let FREC_MAX = 2000;
