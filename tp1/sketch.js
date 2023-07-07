@@ -26,7 +26,7 @@ let FREC_MIN = 600;
 let FREC_MAX =1200;
 let frec;
 //------- Amortiguacion del ruido
-let AMORTIGUACION = 0.5;
+let AMORTIGUACION = 0.8;
 //------- filtro de ruido
 let Gs;
 //------- gestor de pitch
@@ -43,7 +43,7 @@ let classifier;
 let label = "listening...";
 
 const options = { probabilityThreshold: 0.5 };
-let soundModel = "https://teachablemachine.withgoogle.com/models/6ezEXSayv/";
+let soundModel = "https://teachablemachine.withgoogle.com/models/rnTqq90Lp/";
 
 function preload() {
   // Load the model
@@ -51,6 +51,7 @@ function preload() {
 }
 
 function setup() {
+  frameRate(30);
   //------ Pantalla completa del navegador
   createCanvas(windowWidth, windowHeight);
   //------ Imagen al borde del navegador
@@ -97,6 +98,7 @@ function draw() {
   gp.actualizar(vol);
   frec = gp.filtrada;
   console.log(frec);
+  console.log("la amplitud es de "+amp);
   //console.log("medime la frecuencia " + frec);
   //--------- Le asignamos a hay sonido un valor-----
   haySonido = Gs.filtrada > AMP_MIN; //umbral de ruido
@@ -111,8 +113,8 @@ function draw() {
 
   //---------- Estado de sonido al terminar la obra --------
   habiaSonido = !haySonido;
-  Gs.dibujar(200, 200);
-  gp.dibujar(200, 400);
+  // Gs.dibujar(200, 200);
+  // gp.dibujar(200, 400);
 }
 //------------ funcion para testear la amplitud del mic
 function test() {
@@ -148,7 +150,4 @@ function getPitch() {
     }
     getPitch();
   });
-}
-function keyPressed(){
-  //o.reiniciar();
 }

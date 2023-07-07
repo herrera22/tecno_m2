@@ -20,6 +20,6 @@ class fondito {
     //--------- metodo de fondo que llamaremos desde la clase obra
     fondoImg() {
       //------- fondos
-        image(this.fondo[this.numeroDefondo], 0, 0, width, height);
+        xc.image(this.fondo[this.numeroDefondo], 0, 0, width, height);
     }
 }
