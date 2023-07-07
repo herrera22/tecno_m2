@@ -36,7 +36,7 @@ class Obra {
     //------- Si estado es igual a agregar se activara la clase dibujar -----------
     else if (this.estado === "agregar") {
       this.ca1.dibujar();
-      if ((this.ca1.posx >= windowWidth + 50 || this.ca1.posY <= -30 ) && (this.ca1.posY >= windowHeight + 50 || this.ca1.posY <= -30)){
+      if ((this.ca1.posx >= windowWidth + 30 || this.ca1.posY <= -30 ) && (this.ca1.posY >= windowHeight + 30 || this.ca1.posY <= -30)){
         this.estado = "final";
       }
     }
