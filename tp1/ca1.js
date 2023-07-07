@@ -1,11 +1,10 @@
 class caminantes {
   constructor() {
-
     //propiedades del objeto
     this.posx = 0;
     this.posY = 200;
     this.dir = 1;
-    this.vel = 0.9;
+    this.vel = 0.8;
 
     // objeto dir y vel
     this.miVelocidadYDireccion = new Dir_y_Vel();
@@ -45,31 +44,38 @@ class caminantes {
     this.posx = this.posx + this.vel * cos(radians(this.dir));
     this.posY = this.posY + this.vel * sin(radians(this.dir));
     // en mover declaramos que la velocidad de x sea de 1 generando el avance de los caminantes
-
-    if (this.posx >= windowWidth) {
+    if (this.posx >= windowWidth + 100) {
       this.posx = windowWidth;
       this.posY = windowWidth;
+      //this.sacarCaptura();
     }
     // utilizamos la variable direccion y de dir y vel para aumentar el valor de y
-    if (gp.filtrada <= 0.1000 && haySonido) {
-      this.posY += 0.03;
-      this.dir += 0.40;
-      console.log("aca esta andando");
+    if (frec <= 0.02 && haySonido) {
+      this.posY += 0.05;
+      this.dir += 1;
+      console.log("aca esta andando frecuencia minima");
     }
+
     // }//estas dos variable hacen que cuando sostengamos el movimiento sobre el eje x/y el eje y de los caminates se mueva
     // utilizamos la variable direccionx para decrecer el valor de y
-    if (gp.filtrada >= 0.1600 && haySonido) {
-      this.posY -= 0.03;
-      this.dir -= 0.40;
-      console.log("aca esta andandox2 ");
+    else if (frec >= 0.01 && haySonido) {
+      this.posY -= 0.05;
+      this.dir -= 1;
+      console.log("aca esta andando frecuecnia maxima ");
+    } else if (habiaSonido) {
+      this.dir += 0.2;
+      //console.log("viveee");
     }
   }
-
   //------- Funcion dar color con los trazos
   sacarCaptura() {
-    if (keyIsPressed && key === 's') {
     saveCanvas("obra_generativa", "png");
     console.log("Captura guardada como obra_generativa.png");
-    }
+  }
+  reinicio(){
+    this.posx = 0;
+    this.posY = 200;
+    this.dir = 1;
+    this.vel = 0.8;
   }
 }

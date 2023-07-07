@@ -13,18 +13,20 @@ let amp;
 let audioContext;
 //------- utiliza ml5 palra el pitch
 let pitch;
-//------- Modelo ya entrenado 
-const model_url = 'https://cdn.jsdelivr.net/gh/ml5js/ml5-data-and-models/models/pitch-detection/crepe/';
+//------- Modelo ya entrenado
+const model_url =
+  "https://cdn.jsdelivr.net/gh/ml5js/ml5-data-and-models/models/pitch-detection/crepe/";
 // test
 let imprimir = true;
 //------- Valor de configuracion de la amplitud
-let AMP_MIN = 0.01;
+let AMP_MIN = 0.03;
 let AMP_MAX = 0.3;
 //------- Valor de configuracion de la frecuencia
-let FREC_MIN = 900;
-let FREC_MAX = 2000;
+let FREC_MIN = 600;
+let FREC_MAX =1200;
+let frec;
 //------- Amortiguacion del ruido
-let AMORTIGUACION = 0.9;
+let AMORTIGUACION = 0.5;
 //------- filtro de ruido
 let Gs;
 //------- gestor de pitch
@@ -35,17 +37,17 @@ let haySonido = false;
 let habiaSonido = false;
 //------- Determina el comienzo del sonido
 
-// teachable machine 
+// teachable machine
 
 let classifier;
-let label = 'listening...';
+let label = "listening...";
 
 const options = { probabilityThreshold: 0.5 };
-let soundModel = 'https://teachablemachine.withgoogle.com/models/6ezEXSayv/';
+let soundModel = "https://teachablemachine.withgoogle.com/models/6ezEXSayv/";
 
 function preload() {
   // Load the model
-  classifier = ml5.soundClassifier(soundModel + 'model.json');
+  classifier = ml5.soundClassifier(soundModel + "model.json");
 }
 
 function setup() {
@@ -66,6 +68,8 @@ function setup() {
 
   //------- Valor de amortiguacion de ruido
   Gs.f = AMORTIGUACION;
+  //------- valor de amortiguacion del pitch
+  gp.f = AMORTIGUACION;
   //------ Asignamos el audioContext
   audioContext = getAudioContext();
   //------ asignamos el microfono
@@ -81,7 +85,7 @@ function setup() {
   classifier.classify(gotResults);
 }
 
-//-------- FUNCION DRAW 
+//-------- FUNCION DRAW
 function draw() {
   //----------- Amplitud del mic--------------
   let vol = mic.getLevel();
@@ -89,19 +93,26 @@ function draw() {
   Gs.actualizar(vol);
   //----------- Le pasamos a amp el valor filtrado de gs
   amp = Gs.filtrada;
+  //------- Asignamos el filtrado a la variable frec
+  gp.actualizar(vol);
+  frec = gp.filtrada;
+  console.log(frec);
+  //console.log("medime la frecuencia " + frec);
   //--------- Le asignamos a hay sonido un valor-----
-  haySonido = Gs.filtrada > AMP_MIN; //umbral de ruido 
+  haySonido = Gs.filtrada > AMP_MIN; //umbral de ruido
   //--------- Determinamos cuando comienza el sonido----
 
   //--------- Llamamos a la clase obra y usamos acrualizar para visualizar el programa----------
   o.actualizar();
   //--------- prueba para debuguear
-  
+
   // -------- Canvas de pgrafic
   image(xc, 0, 0);
 
   //---------- Estado de sonido al terminar la obra --------
-  habiaSonido = haySonido;
+  habiaSonido = !haySonido;
+  Gs.dibujar(200, 200);
+  gp.dibujar(200, 400);
 }
 //------------ funcion para testear la amplitud del mic
 function test() {
@@ -120,7 +131,6 @@ function gotResults(error, results) {
     return;
   }
   label = results[0].label;
-
 }
 
 //-------- FUNCIONES DEL PITCH/MACHINELEARNING
@@ -134,9 +144,11 @@ function getPitch() {
   pitch.getPitch(function (err, frequency) {
     if (frequency) {
       gp.actualizar(frequency);
-      console.log("la frecuencia es " + frequency);
+      //console.log("la frecuencia es " + frequency);
     }
     getPitch();
-  })
+  });
 }
-
+function keyPressed(){
+  //o.reiniciar();
+}
