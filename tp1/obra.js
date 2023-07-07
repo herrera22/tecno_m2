@@ -36,18 +36,20 @@ class Obra {
     //------- Si estado es igual a agregar se activara la clase dibujar -----------
     else if (this.estado === "agregar") {
       this.ca1.dibujar();
-      if ((this.ca1.posx >= windowWidth + 30 || this.ca1.posY <= -30 ) && (this.ca1.posY >= windowHeight + 30 || this.ca1.posY <= -30)){
+    //------- Es condicional cambia el estado cuando los caminantes se van de los parametros de la pantalla 
+      if ((this.ca1.posx >= windowWidth || this.ca1.posY <= -30 ) && (this.ca1.posY >= windowHeight || this.ca1.posY <= -30)){
+        // estado cambia de valor a "final"
         this.estado = "final";
       }
     }
+    //------- Si estado es igual a final, la condicional activara el reinicio del programa de forma automatica 
     else if (this.estado === "final"){
       this.reinicio();
     }
-    //------- Cuando no hay sonido termina el programa 
-    //-------- Imprime en consola el estado en donde se encuntra el programa ---------
-    // console.log(this.estado);
   }
+    //------- funcion que determina el reinicio del programa
   reinicio(){
+    //------- Devuelve todas las variables a su estado orginal
       this.estado = "comienzo";
       this.tiempo = 0;
       this.ca1.reinciar();
