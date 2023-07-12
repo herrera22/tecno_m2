@@ -37,7 +37,7 @@ class Obra {
     else if (this.estado === "agregar") {
       this.ca1.dibujar();
     //------- Es condicional cambia el estado cuando los caminantes se van de los parametros de la pantalla 
-      if ((this.ca1.posx >= windowWidth || this.ca1.posY <= -30 ) && (this.ca1.posY >= windowHeight || this.ca1.posY <= -30)){
+      if ((this.ca1.posx >= windowWidth || this.ca1.posY <= -30 ) || (this.ca1.posY >= windowHeight || this.ca1.posY <= -30)){
         // estado cambia de valor a "final"
         this.estado = "final";
       }
