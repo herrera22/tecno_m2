@@ -6,7 +6,7 @@ void oscEvent(OscMessage m) {
       palmaDetectada = true;
       tiempoPalmaDetectada = millis();
     } else {
-      if (millis() - tiempoPalmaDetectada >= tiempoEspera ) {
+      if (millis() - tiempoPalmaDetectada >= tiempoEspera && Estado == 0 ) {
         Estado=1;
         palmaDetectada = false;
       }
@@ -17,10 +17,13 @@ void oscEvent(OscMessage m) {
 
   // Establecer la posición del personaje en función de las coordenadas de la mano
   float xEnCaptura = posX;
-  float xEnPantalla = map(xEnCaptura, 0,anchoMov,0,width);
-  float f = 1;
+  float yEnCaptura = posY;
+  float xEnPantalla = map(xEnCaptura, 0, 1200, 0, width);
+  float yEnPantalla = map(yEnCaptura, 0, 720, 0, height);
+  float f = 0.93;
   xManija = lerp(xEnPantalla, xManija, f);
-  ancla.setTarget(xManija, 545);
+  yManija = lerp(yEnPantalla, yManija, f);
+  ancla.setTarget(xManija, yManija);
 }
 
 //--------------funcion de contacto-----------------------
@@ -40,15 +43,18 @@ void contactStarted(FContact contact) {
 
   if (_body1.getName()=="pelota" && _body2.getName()=="aro" && contact.getNormalY()<=0) {
     punto=punto+1;
-    println("hay colrision");
   } else if (_body2.getName()=="pelota" && _body1.getName()=="aro" && contact.getNormalY()<=0) {
     punto=punto+1;
+    println("hay colision");
+    p.eliminar();
   }
-  
-   if (_body1.getName()=="pelota" && _body2.getName()=="suelo" || _body2.getName()=="suelo" && _body1.getName()=="pelota") {
-    mundo.remove(pj);
-    hayPelota=false;
-    println("hay colrision");
+
+  if (_body1.getName()=="pelota" && _body2.getName()=="suelo" && contact.getNormalY()<=0) {
+    println("hola");
+    p.eliminar();
+  } else if (_body2.getName()=="pelota" && _body1.getName()=="suelo" && contact.getNormalY()<=0) {
+    println("hola");
+    p.eliminar();
   }
 
 
